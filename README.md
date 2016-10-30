@@ -17,18 +17,18 @@ Running `npm run dev` will start up a dev server, go to `http://localhost:3333/i
   * [velocity.js](http://velocityjs.org/)
   * [Zepto.js](http://zeptojs.com/) or [jQuery](https://jquery.com/)
 
-### Sample of usage
+### Example of usage
 
-See `index.html` file for usage.
+See `index.html` file for an example.
 
 ### API
 
 * `sgc = new SvgGaugeCircle(size, value, maxValue, fontSize, strokeWidth)`:
-  * size: length of a side of a square bounding box in which the element is drawn
-  * value: a value to be shown on the gauge
-  * maxValue: maximum value that can be shown on the gauge ie. number at which the gauge's external circle would be 100% filled
-  * fontSize: font size of the digits shown in px
-  * strokeWidth: width of the external circle
+  * `size`: length of a side of a square bounding box in which the element is drawn
+  * `value`: a value to be shown on the gauge
+  * `maxValue`: maximum value that can be shown on the gauge ie. number at which the gauge's external circle would be 100% filled
+  * `fontSize`: font size of the digits shown in px
+  * `strokeWidth`: width of the external circle
 * `sgc.draw(container)` - draw the gauge inside of the `container` element; this will return a `Promise` that is resolved when drawing of the gauge has been finished
 
 ## Todo
