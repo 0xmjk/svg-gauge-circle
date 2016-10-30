@@ -31,6 +31,21 @@ See `index.html` file for an example.
   * `strokeWidth`: width of the external circle
 * `sgc.draw(container)` - draw the gauge inside of the `container` element; this will return a `Promise` that is resolved when drawing of the gauge has been finished
 
+### Styling
+
+The gauge will be styled using the enclosing container's properties. Mainly with:
+  * `fill`: for internal circle fill color
+  * `stroke`: for external circle fill color
+  * `color`: for text color
+```css
+#container1 {
+    fill: lightgreen;
+    stroke: lightblue;
+    color: white;
+    font-family: Arial;
+}
+```
+
 ## Todo
 
   * update the gauge after drawing it first time
