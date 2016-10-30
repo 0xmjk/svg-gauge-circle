@@ -20,7 +20,6 @@ class SvgGaugeCircle {
             length: frames + 1
         }).map((v, i) => Math.ceil(min + i * (max - min) / frames));
         var f = time / (frames * 1.1);
-        var n = 0;
         var l = (n) => {
             callback(p[n]);
             if (n < frames) {
@@ -42,7 +41,6 @@ class SvgGaugeCircle {
         let root = $("#" + id);
         root.append(svg);
         let fillColor = root.css("fill");
-        let strokeColor = root.css("stroke");
         let textColor = root.css("color");
 
         let cx = this.width / 2;
