@@ -9,7 +9,7 @@
     "build": "webpack --config build.webpack.config.js"
   },
   "author": "Michal J Kubski",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "velocity-commonjs": "^1.0.1",
     "zepto": "^1.2.0"
