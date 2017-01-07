@@ -3,14 +3,16 @@ function $svg(tagName) {
 }
 
 class SvgGaugeCircle {
-    constructor(size, value, maxValue, fontSize, strokeWidth) {
+    constructor(size, value, cutoffValue, maxValue, fontSize, strokeWidth) {
         this.width = size;
         this.height = size;
         this.radius = Math.floor((size - 1) / 2);
         this.value = value;
+        this.cutoffValue = cutoffValue;
         this.maxValue = maxValue;
         this.fontSize = fontSize;
         this.strokeWidth = strokeWidth;
+        this.cutoffLineWidth = 2;
         this.duration = 2000;
         this.frameCount = 24 * 5;
     }
@@ -49,6 +51,7 @@ class SvgGaugeCircle {
         let g = $svg("g");
         let gt = $svg("g");
         let circle_stroke = $svg("circle");
+        let circle_stroke_cutoff = $svg("circle");
         let circle_out = $svg("circle");
         let circle_in = $svg("circle");
 
@@ -76,6 +79,18 @@ class SvgGaugeCircle {
             "stroke-width": this.strokeWidth,
         });
 
+        circle_stroke_cutoff.attr({
+            "r": radius_stroke,
+            "cx": cx,
+            "cy": cy,
+            "fill": "none",
+            "class": "stroke-cutoff"
+        });
+
+        circle_stroke_cutoff.css({
+            "stroke-width": this.strokeWidth
+        });
+
         circle_out.attr({
             "r": radius_out,
             "cx": cx,
@@ -87,6 +102,7 @@ class SvgGaugeCircle {
 
         g.append(circle_in);
         g.append(circle_stroke);
+        g.append(circle_stroke_cutoff);
         g.append(circle_out);
         g.attr({
             "transform": `rotate(90 ${cx} ${cy}) translate(0,0) scale(1,1)`
@@ -95,8 +111,19 @@ class SvgGaugeCircle {
             "transform": `translate(0, ${this.fontSize / 2.9166})`
         })
         let circumference = 2 * Math.PI * radius_stroke;
-        let quarter = Math.round(this.value / this.maxValue * circumference);
+        let quarter = 0;
+        let quarter_cutoff = 0;
+        if (this.value <= this.cutoffValue) {
+            quarter = Math.round(this.value / this.maxValue * circumference);
+        } else {
+            quarter = Math.round(this.cutoffValue / this.maxValue * circumference);
+            quarter_cutoff = Math.round((this.value - this.cutoffValue) / this.maxValue * circumference);
+        }
+        let quarter_cutoff_deg = Math.round(this.cutoffValue / this.maxValue * 360);
         let text = $svg("text");
+        circle_stroke_cutoff.attr({
+            "transform": `rotate(${quarter_cutoff_deg} ${cx} ${cy})`
+        })
         text.attr({
             "x": cx,
             "y": cy,
@@ -115,9 +142,15 @@ class SvgGaugeCircle {
                 this.upcount(0, this.value, this.duration, this.frameCount, (i) => text.html(i));
                 circle_stroke.css("stroke-dasharray", circumference);
                 circle_stroke.css("stroke-dashoffset", circumference);
+                circle_stroke_cutoff.css("stroke-dasharray", circumference);
+                circle_stroke_cutoff.css("stroke-dashoffset", circumference + this.cutoffLineWidth);
                 $.Velocity(circle_stroke, {
                     "stroke-dashoffset": circumference - quarter
-                }, this.duration).then(resolve);
+                }, this.duration).then(() => {
+                  $.Velocity(circle_stroke_cutoff, {
+                      "stroke-dashoffset": circumference + this.cutoffLineWidth - quarter_cutoff
+                  }, this.duration).then(resolve)
+              });
             }.bind(this)
         );
     }
