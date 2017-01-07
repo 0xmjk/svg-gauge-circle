@@ -23,9 +23,10 @@ See `index.html` file for an example.
 
 ### API
 
-* `sgc = new SvgGaugeCircle(size, value, maxValue, fontSize, strokeWidth)`:
+* `sgc = new SvgGaugeCircle(size, value, cutoffValue, maxValue, fontSize, strokeWidth)`:
   * `size`: length of a side of a square bounding box in which the element is drawn
   * `value`: a value to be shown on the gauge
+  * `cutoffValue`: threshold/cutoff value shown on the gauge
   * `maxValue`: maximum value that can be shown on the gauge ie. number at which the gauge's external circle would be 100% filled
   * `fontSize`: font size of the digits shown in px
   * `strokeWidth`: width of the external circle
@@ -43,6 +44,14 @@ The gauge will be styled using the enclosing container's properties. Mainly with
     stroke: lightblue;
     color: white;
     font-family: Arial;
+}
+```
+
+Stroke style after crossing the cutoff value can be styled with:
+
+```css
+#container1 .stroke-cutoff {
+    stroke: red;
 }
 ```
 
