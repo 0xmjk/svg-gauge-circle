@@ -42,8 +42,6 @@ class SvgGaugeCircle {
         });
         let root = $("#" + id);
         root.append(svg);
-        let fillColor = root.css("fill");
-        let textColor = root.css("color");
 
         let cx = this.width / 2;
         let cy = this.height / 2;
@@ -64,15 +62,15 @@ class SvgGaugeCircle {
             "r": radius_in,
             "cx": cx,
             "cy": cy,
-            "fill": fillColor,
-            "stroke": "none"
+            "class": "sgc-inner-circle"
         });
 
         circle_stroke.attr({
             "r": radius_stroke,
             "cx": cx,
             "cy": cy,
-            "fill": "none"
+            "fill": "none",
+            "class": "sgc-stroke"
         });
 
         circle_stroke.css({
@@ -84,7 +82,7 @@ class SvgGaugeCircle {
             "cx": cx,
             "cy": cy,
             "fill": "none",
-            "class": "stroke-cutoff"
+            "class": "sgc-stroke-cutoff"
         });
 
         circle_stroke_cutoff.css({
@@ -96,8 +94,7 @@ class SvgGaugeCircle {
             "cx": cx,
             "cy": cy,
             "fill": "none",
-            "stroke": fillColor,
-            "stroke-width": 1
+            "class": "sgc-outer-circle"
         });
 
         g.append(circle_in);
@@ -133,8 +130,12 @@ class SvgGaugeCircle {
             "x": cx,
             "y": cy,
             "font-size": this.fontSize,
-            "text-anchor": "middle"
+            "text-anchor": "middle",
+            "class": "sgc-text"
         });
+        gt.append(text);
+        svg.append(gt);
+        let textColor = text.css("color");
         text.attr({
             "stroke": textColor,
             "fill": textColor
@@ -142,8 +143,6 @@ class SvgGaugeCircle {
 
         return new Promise(
             function(resolve, reject) {
-                gt.append(text);
-                svg.append(gt);
                 this.upcount(0, this.value, this.duration, this.frameCount, (i) => text.html(i));
                 circle_stroke.css("stroke-dasharray", circumference);
                 circle_stroke.css("stroke-dashoffset", circumference);

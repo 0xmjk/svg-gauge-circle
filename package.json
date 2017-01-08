@@ -1,6 +1,6 @@
 {
   "name": "svg-gauge-circle",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "SVG Animated Gauge in a circle shape",
   "main": "index.js",
   "scripts": {
