@@ -113,11 +113,16 @@ class SvgGaugeCircle {
         let circumference = 2 * Math.PI * radius_stroke;
         let quarter = 0;
         let quarter_cutoff = 0;
+        let quarter_duration = 0;
+        let quarter_cutoff_duration = 0;
         if (this.value <= this.cutoffValue) {
             quarter = Math.round(this.value / this.maxValue * circumference);
+            quarter_duration = this.duration;
         } else {
             quarter = Math.round(this.cutoffValue / this.maxValue * circumference);
             quarter_cutoff = Math.round((this.value - this.cutoffValue) / this.maxValue * circumference);
+            quarter_duration = Math.round(this.cutoffValue / this.value * this.duration);
+            quarter_cutoff_duration = Math.round((this.value - this.cutoffValue) / this.value * this.duration);
         }
         let quarter_cutoff_deg = Math.round(this.cutoffValue / this.maxValue * 360);
         let text = $svg("text");
@@ -146,10 +151,22 @@ class SvgGaugeCircle {
                 circle_stroke_cutoff.css("stroke-dashoffset", circumference + this.cutoffLineWidth);
                 $.Velocity(circle_stroke, {
                     "stroke-dashoffset": circumference - quarter
-                }, this.duration).then(() => {
-                  $.Velocity(circle_stroke_cutoff, {
-                      "stroke-dashoffset": circumference + this.cutoffLineWidth - quarter_cutoff
-                  }, this.duration).then(resolve)
+                }, quarter_duration).then(() => {
+                  if (this.value > this.cutoffValue) {
+                    /* css() returns rgb(int, int, int) and Velocity requires a hexadecimal representation.
+                       thereof, it has to be converted... */
+                    var rgb = circle_stroke_cutoff.css('stroke').match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                    function hex(x) {
+                        return ("0" + parseInt(x).toString(16)).slice(-2);
+                    }
+                    var stroke_color = "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+                    $.Velocity(circle_stroke, {stroke: stroke_color}, quarter_cutoff_duration);
+                    $.Velocity(circle_stroke_cutoff, {
+                        "stroke-dashoffset": circumference + this.cutoffLineWidth - quarter_cutoff
+                    }, quarter_cutoff_duration).then(resolve)
+                  } else {
+                    resolve();
+                  }
               });
             }.bind(this)
         );
