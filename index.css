@@ -1,0 +1,32 @@
+#container1 .sgc-text, #container2 .sgc-text {
+    color: #171d69;
+    font-family: Arial;
+    /* no select */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    /* arrow cursor */
+    cursor: default;
+}
+
+#container1 .sgc-inner-circle, #container2 .sgc-inner-circle {
+    stroke: #ca4545;
+    fill: #ff9595;
+}
+
+#container1 .sgc-outer-circle, #container2 .sgc-outer-circle {
+    stroke: #980e0e;
+    stroke-width: 2;
+}
+
+#container1 .sgc-stroke, #container2 .sgc-stroke {
+    stroke: #78cd78;
+}
+
+#container1 .sgc-stroke-cutoff, #container2 .sgc-stroke-cutoff {
+    stroke: #ffe395;
+}
