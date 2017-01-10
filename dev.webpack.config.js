@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: './main-dev.js',
+        app: './main.js',
         vendor: ["zepto", "velocity-commonjs"]
     },
     output: {

@@ -19,7 +19,7 @@ Running `npm run dev` will start up a dev server, go to `http://localhost:3333/i
 
 ### Example of usage
 
-See `index.html` file for an example.
+See [demo](https://0xmjk.github.io/svg-gauge-circle) for an example.
 
 ### API
 
@@ -34,24 +34,35 @@ See `index.html` file for an example.
 
 ### Styling
 
-The gauge will be styled using the enclosing container's properties. Mainly with:
-  * `fill`: for internal circle fill color
-  * `stroke`: for external circle fill color
-  * `color`: for text color
+The gauge will be styled using the following classes:
+  * `sgc-inner-circle`: for internal circle properties (use ```stroke``` for circle's edge)
+  * `sgc-outer-circle`: for external circle properties (don't use ```fill``` here)
+  * `sgc-stroke`: for the animated stroke properties before it reaches the cutoffValue
+  * `sgc-stroke-cutoff`: for the animated stroke properties after it reached the cutoffValue
+  * `sgc-text`: for text properties
+
 ```css
-#container1 {
-    fill: lightgreen;
-    stroke: lightblue;
-    color: white;
+#container1 .sgc-text {
+    color: #171d69;
     font-family: Arial;
 }
-```
 
-Stroke style after crossing the cutoff value can be styled with:
+#container1 .sgc-inner-circle {
+    stroke: #ca4545;
+    fill: #ff9595;
+}
 
-```css
-#container1 .stroke-cutoff {
-    stroke: red;
+#container1 .sgc-outer-circle {
+    stroke: #980e0e;
+    stroke-width: 2;
+}
+
+#container1 .sgc-stroke {
+    stroke: #78cd78;
+}
+
+#container1 .sgc-stroke-cutoff {
+    stroke: #ffe395;
 }
 ```
 
